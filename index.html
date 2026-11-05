@@ -1,0 +1,269 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Como resolver todos os problemas da sua vida</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a, #312e81, #000000);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Inter', sans-serif;
+            color: #e2e8f0;
+        }
+
+        h1, .mystic-text {
+            font-family: 'Cinzel', serif;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 8 Ball Styling */
+        .magic-ball {
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle at 100px 100px, #4b5563, #000000);
+            border-radius: 50%;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8), inset -20px -20px 40px rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            margin: 0 auto;
+            transition: transform 0.3s ease;
+        }
+
+        .magic-ball-window {
+            width: 160px;
+            height: 160px;
+            background: radial-gradient(circle at center, #1e1e1e, #000000);
+            border: 4px solid #111;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 0 20px rgba(0,0,0,1);
+        }
+
+        /* The blue triangle inside */
+        .triangle {
+            width: 0;
+            height: 0;
+            border-left: 60px solid transparent;
+            border-right: 60px solid transparent;
+            border-top: 100px solid #1e3a8a; /* Deep blue */
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+
+        .triangle-text {
+            position: absolute;
+            top: -90px;
+            width: 90px;
+            text-align: center;
+            color: #93c5fd;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            line-height: 1.2;
+            text-shadow: 0 0 5px rgba(147, 197, 253, 0.5);
+            font-family: 'Cinzel', serif;
+        }
+
+        /* Number 8 */
+        .number-eight {
+            font-size: 6rem;
+            font-weight: bold;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            background: #fff;
+            color: #000;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s;
+        }
+
+        /* Animations */
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+
+        .shaking {
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+            animation-iteration-count: 2;
+        }
+
+        .fade-in {
+            opacity: 1 !important;
+        }
+        
+        .fade-out {
+            opacity: 0 !important;
+        }
+
+        /* Floating effect for the ball */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+
+    <!-- Header / Intro -->
+    <div class="text-center max-w-2xl mb-10 mt-8 z-10">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-300 drop-shadow-lg leading-tight">
+            Como resolver todos os problemas da sua vida e ser feliz para sempre
+        </h1>
+        <p class="text-lg md:text-xl text-blue-200 opacity-90 mystic-text mt-4">
+            Utilize essa bola mágica e descubra o grande segredo do universo.
+        </p>
+    </div>
+
+    <!-- Input Section -->
+    <div class="w-full max-w-md mb-8 z-10">
+        <div class="relative">
+            <input type="text" id="questionInput" placeholder="Pense no seu maior problema..." 
+                class="w-full bg-slate-900/60 border border-indigo-500/30 rounded-full py-4 px-6 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-center transition-all shadow-lg backdrop-blur-sm">
+        </div>
+    </div>
+
+    <!-- Magic 8 Ball -->
+    <div class="mb-12 z-10 cursor-pointer floating" id="magicBallContainer" onclick="askQuestion()">
+        <div class="magic-ball" id="magicBall">
+            <!-- White circle with 8 -->
+            <div class="number-eight" id="numberEight">8</div>
+            
+            <!-- Dark Window for answers -->
+            <div class="magic-ball-window absolute inset-0 m-auto opacity-0" id="answerWindow">
+                <!-- Triangle with text -->
+                <div class="triangle" id="answerTriangle">
+                    <div class="triangle-text" id="answerText">
+                        <!-- Answer goes here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Button -->
+    <div class="z-10 mb-12">
+        <button onclick="askQuestion()" id="askBtn"
+            class="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white bg-gradient-to-r from-purple-600 to-blue-600 rounded-full overflow-hidden shadow-[0_0_20px_rgba(124,58,237,0.5)] transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(124,58,237,0.8)] focus:outline-none">
+            <span class="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-black"></span>
+            <span class="relative text-lg mystic-text tracking-wider">Revelar a Solução</span>
+        </button>
+    </div>
+
+    <script>
+        // Array of exclusively correct answers
+        const respostas = [
+            "A resposta é óbvia: volte com a Gi Ribeiro.",
+            "Voltar com a Gi Ribeiro.",
+            "Os astros indicam: voltar com a Gi Ribeiro.",
+            "Sem dúvida nenhuma, voltar com a Gi Ribeiro.",
+            "Só existe uma solução: a Gi Ribeiro.",
+            "Volte para a Gi Ribeiro imediatamente.",
+            "O universo clama para você voltar com a Gi Ribeiro.",
+            "A única saída é voltar com a Gi Ribeiro.",
+            "Com certeza: voltar com a Gi Ribeiro.",
+            "Minhas fontes dizem: Gi Ribeiro.",
+            "A chave para a felicidade: voltar com a Gi Ribeiro.",
+            "É simples, apenas volte com a Gi Ribeiro."
+        ];
+
+        let isShaking = false;
+
+        function askQuestion() {
+            if (isShaking) return;
+            
+            const ball = document.getElementById('magicBall');
+            const ballContainer = document.getElementById('magicBallContainer');
+            const eight = document.getElementById('numberEight');
+            const window = document.getElementById('answerWindow');
+            const triangle = document.getElementById('answerTriangle');
+            const answerText = document.getElementById('answerText');
+            const btn = document.getElementById('askBtn');
+
+            // Reset states
+            isShaking = true;
+            ballContainer.classList.remove('floating');
+            triangle.classList.remove('fade-in');
+            window.classList.remove('fade-in');
+            eight.classList.remove('fade-out');
+            
+            // Start shake
+            ball.classList.add('shaking');
+            btn.disabled = true;
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+
+            // Remove shake and reveal answer after animation
+            setTimeout(() => {
+                ball.classList.remove('shaking');
+                
+                // Fade out the 8, fade in the window
+                eight.classList.add('fade-out');
+                window.classList.add('fade-in');
+
+                // Get random answer
+                const randomInt = Math.floor(Math.random() * respostas.length);
+                answerText.innerText = respostas[randomInt];
+
+                // Fade in triangle with delay for dramatic effect
+                setTimeout(() => {
+                    triangle.classList.add('fade-in');
+                    
+                    // Allow asking again after it's fully revealed
+                    setTimeout(() => {
+                        isShaking = false;
+                        btn.disabled = false;
+                        btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                        ballContainer.classList.add('floating');
+                    }, 1000);
+                }, 500);
+
+            }, 1000); // 1 second shake duration (2 iterations of 0.5s)
+        }
+
+        // Allow hitting Enter in the input to ask
+        document.getElementById('questionInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                askQuestion();
+            }
+        });
+    </script>
+</body>
+</html>
